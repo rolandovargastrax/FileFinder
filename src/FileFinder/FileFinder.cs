@@ -16,6 +16,7 @@ namespace FileFinder
 		}
 
         private bool _continueWork = true;
+        private bool _searchingInFiles = false;
 
 		#region Update UI Controls
 		private delegate void SetControlPropertyThreadSafeDelegate(Control control, string propertyName, object propertyValue);
@@ -111,6 +112,7 @@ namespace FileFinder
         {
             UpdateControlStatus(false);
             dtpFileDate.Value = DateTime.Now;
+            lblProgress.Text = "";
         }
 
 
@@ -172,6 +174,8 @@ namespace FileFinder
         {
             try
             {
+                _searchingInFiles = false;
+
                 // collect all files from folders (after dateAfter)
                 // loop all the files searching for the value
 
@@ -240,6 +244,7 @@ namespace FileFinder
                 string[] searchValuesArray = searchValues.Split(new string[] { System.Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 List<string> searchValuesList = new List<string>();
                 searchValuesList.AddRange(searchValuesArray);
+                _searchingInFiles = true;
                 foreach (FileInfo currentFile in files)
                 {
                     if (!_continueWork)
@@ -265,6 +270,13 @@ namespace FileFinder
             if (value < maxValue)
             {
                 SetControlPropertyThreadSafe(prgBottom, "Value", ((int)GetControlPropertyThreadSafe(prgBottom, "Value")) + 1);
+            }
+            value = (int)GetControlPropertyThreadSafe(prgBottom, "Value");
+
+            // update the file count label
+            if (_searchingInFiles)
+            {
+                SetControlPropertyThreadSafe(lblProgress, "Text", string.Format("File {0} of {1}", value, maxValue));
             }
         }
 

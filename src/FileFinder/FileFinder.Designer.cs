@@ -46,6 +46,7 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.prgBottom = new System.Windows.Forms.ProgressBar();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
+            this.lblProgress = new System.Windows.Forms.Label();
             this.grpSourcePaths.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltMain)).BeginInit();
             this.spltMain.Panel1.SuspendLayout();
@@ -227,6 +228,7 @@
             // 
             // pnlPrgBottom
             // 
+            this.pnlPrgBottom.Controls.Add(this.lblProgress);
             this.pnlPrgBottom.Controls.Add(this.btnCancel);
             this.pnlPrgBottom.Controls.Add(this.btnSearch);
             this.pnlPrgBottom.Controls.Add(this.prgBottom);
@@ -272,6 +274,16 @@
             this.bgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker_DoWork);
             this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
             // 
+            // lblProgress
+            // 
+            this.lblProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblProgress.AutoSize = true;
+            this.lblProgress.Location = new System.Drawing.Point(-3, 37);
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(58, 13);
+            this.lblProgress.TabIndex = 3;
+            this.lblProgress.Text = "lblProgress";
+            // 
             // FileFinder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -299,6 +311,7 @@
             this.grpSearchValues.ResumeLayout(false);
             this.grpSearchValues.PerformLayout();
             this.pnlPrgBottom.ResumeLayout(false);
+            this.pnlPrgBottom.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -323,6 +336,7 @@
         private System.ComponentModel.BackgroundWorker bgWorker;
         private System.Windows.Forms.TextBox txtFileNamePattern;
         private System.Windows.Forms.Label lblFileNamePattern;
+        private System.Windows.Forms.Label lblProgress;
     }
 }
 
