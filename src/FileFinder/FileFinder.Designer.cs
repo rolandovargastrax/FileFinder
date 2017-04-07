@@ -42,11 +42,14 @@
             this.txtSearchValues = new System.Windows.Forms.TextBox();
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.pnlPrgBottom = new System.Windows.Forms.Panel();
+            this.btnClearOutput = new System.Windows.Forms.Button();
+            this.lblProgress = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.prgBottom = new System.Windows.Forms.ProgressBar();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
-            this.lblProgress = new System.Windows.Forms.Label();
+            this.rdbFileContent = new System.Windows.Forms.RadioButton();
+            this.rdbFileName = new System.Windows.Forms.RadioButton();
             this.grpSourcePaths.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltMain)).BeginInit();
             this.spltMain.Panel1.SuspendLayout();
@@ -191,6 +194,8 @@
             // 
             // grpSearchValues
             // 
+            this.grpSearchValues.Controls.Add(this.rdbFileName);
+            this.grpSearchValues.Controls.Add(this.rdbFileContent);
             this.grpSearchValues.Controls.Add(this.txtSearchValues);
             this.grpSearchValues.Dock = System.Windows.Forms.DockStyle.Fill;
             this.grpSearchValues.Location = new System.Drawing.Point(0, 0);
@@ -202,15 +207,17 @@
             // 
             // txtSearchValues
             // 
+            this.txtSearchValues.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.txtSearchValues.BackColor = System.Drawing.Color.White;
             this.txtSearchValues.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtSearchValues.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtSearchValues.Location = new System.Drawing.Point(3, 16);
+            this.txtSearchValues.Location = new System.Drawing.Point(3, 44);
             this.txtSearchValues.MaxLength = 327670;
             this.txtSearchValues.Multiline = true;
             this.txtSearchValues.Name = "txtSearchValues";
             this.txtSearchValues.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtSearchValues.Size = new System.Drawing.Size(645, 231);
+            this.txtSearchValues.Size = new System.Drawing.Size(645, 203);
             this.txtSearchValues.TabIndex = 0;
             // 
             // txtOutput
@@ -222,12 +229,14 @@
             this.txtOutput.MaxLength = 327679;
             this.txtOutput.Multiline = true;
             this.txtOutput.Name = "txtOutput";
+            this.txtOutput.ReadOnly = true;
             this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
             this.txtOutput.Size = new System.Drawing.Size(1205, 215);
             this.txtOutput.TabIndex = 1;
             // 
             // pnlPrgBottom
             // 
+            this.pnlPrgBottom.Controls.Add(this.btnClearOutput);
             this.pnlPrgBottom.Controls.Add(this.lblProgress);
             this.pnlPrgBottom.Controls.Add(this.btnCancel);
             this.pnlPrgBottom.Controls.Add(this.btnSearch);
@@ -237,6 +246,27 @@
             this.pnlPrgBottom.Name = "pnlPrgBottom";
             this.pnlPrgBottom.Size = new System.Drawing.Size(1205, 60);
             this.pnlPrgBottom.TabIndex = 0;
+            // 
+            // btnClearOutput
+            // 
+            this.btnClearOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClearOutput.Location = new System.Drawing.Point(933, 32);
+            this.btnClearOutput.Name = "btnClearOutput";
+            this.btnClearOutput.Size = new System.Drawing.Size(110, 23);
+            this.btnClearOutput.TabIndex = 4;
+            this.btnClearOutput.Text = "Clear Output";
+            this.btnClearOutput.UseVisualStyleBackColor = true;
+            this.btnClearOutput.Click += new System.EventHandler(this.btnClearOutput_Click);
+            // 
+            // lblProgress
+            // 
+            this.lblProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblProgress.AutoSize = true;
+            this.lblProgress.Location = new System.Drawing.Point(-3, 37);
+            this.lblProgress.Name = "lblProgress";
+            this.lblProgress.Size = new System.Drawing.Size(58, 13);
+            this.lblProgress.TabIndex = 3;
+            this.lblProgress.Text = "lblProgress";
             // 
             // btnCancel
             // 
@@ -274,15 +304,28 @@
             this.bgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker_DoWork);
             this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
             // 
-            // lblProgress
+            // rdbFileContent
             // 
-            this.lblProgress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.lblProgress.AutoSize = true;
-            this.lblProgress.Location = new System.Drawing.Point(-3, 37);
-            this.lblProgress.Name = "lblProgress";
-            this.lblProgress.Size = new System.Drawing.Size(58, 13);
-            this.lblProgress.TabIndex = 3;
-            this.lblProgress.Text = "lblProgress";
+            this.rdbFileContent.AutoSize = true;
+            this.rdbFileContent.Checked = true;
+            this.rdbFileContent.Location = new System.Drawing.Point(6, 19);
+            this.rdbFileContent.Name = "rdbFileContent";
+            this.rdbFileContent.Size = new System.Drawing.Size(81, 17);
+            this.rdbFileContent.TabIndex = 1;
+            this.rdbFileContent.TabStop = true;
+            this.rdbFileContent.Text = "File Content";
+            this.rdbFileContent.UseVisualStyleBackColor = true;
+            // 
+            // rdbFileName
+            // 
+            this.rdbFileName.AutoSize = true;
+            this.rdbFileName.Location = new System.Drawing.Point(93, 21);
+            this.rdbFileName.Name = "rdbFileName";
+            this.rdbFileName.Size = new System.Drawing.Size(72, 17);
+            this.rdbFileName.TabIndex = 2;
+            this.rdbFileName.TabStop = true;
+            this.rdbFileName.Text = "File Name";
+            this.rdbFileName.UseVisualStyleBackColor = true;
             // 
             // FileFinder
             // 
@@ -337,6 +380,9 @@
         private System.Windows.Forms.TextBox txtFileNamePattern;
         private System.Windows.Forms.Label lblFileNamePattern;
         private System.Windows.Forms.Label lblProgress;
+        private System.Windows.Forms.Button btnClearOutput;
+        private System.Windows.Forms.RadioButton rdbFileName;
+        private System.Windows.Forms.RadioButton rdbFileContent;
     }
 }
 

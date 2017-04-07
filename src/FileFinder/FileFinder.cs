@@ -115,6 +115,7 @@ namespace FileFinder
             lblProgress.Text = "";
         }
 
+        #region UpdateControlStatus
 
         /// <summary>
         /// Updates the controls to enabled / disabled depending on app status
@@ -130,7 +131,12 @@ namespace FileFinder
             SetControlPropertyThreadSafe(chkDate, "Enabled", !isRunning);
             SetControlPropertyThreadSafe(chkIncludeSubFolders, "Enabled", !isRunning);
             SetControlPropertyThreadSafe(dtpFileDate, "Enabled", !isRunning);
+            SetControlPropertyThreadSafe(btnClearOutput, "Enabled", !isRunning);
+            SetControlPropertyThreadSafe(txtOutput, "ReadOnly", isRunning);
+            SetControlPropertyThreadSafe(rdbFileName, "Enabled", !isRunning);
+            SetControlPropertyThreadSafe(rdbFileContent, "Enabled", !isRunning);
         }
+        #endregion UpdateControlStatus
 
         /// <summary>
         /// Method called to trigger the backgrouund worker
@@ -251,7 +257,20 @@ namespace FileFinder
                     {
                         break;
                     }
-                    SearchInFile(currentFile, searchValuesList);
+                    // search in the file content
+                    if ((bool)GetControlPropertyThreadSafe(rdbFileContent, "Checked"))
+                    {
+                        SearchInFile(currentFile, searchValuesList);
+                    }
+                    // search  in the file name
+                    else if ((bool)GetControlPropertyThreadSafe(rdbFileName, "Checked"))
+                    {
+                        if (searchValuesList.Contains(currentFile.Name))
+                        {
+                            AddLineToOutput(string.Format("File '{0}' found' ({1}/{2}/{3})", currentFile.FullName, currentFile.LastWriteTime.Year, currentFile.LastWriteTime.Month, currentFile.LastWriteTime.Day));
+                        }
+                    }
+
                     AddToProgressBar();
                 }
             }
@@ -328,13 +347,18 @@ namespace FileFinder
                         }
                         if (line.Contains(currentSearchValue))
                         {
-                            AddLineToOutput(string.Format("Value '{0}' found in file '{1}'", currentSearchValue, file.FullName));
+                            AddLineToOutput(string.Format("Value '{0}' found in file '{1}' ({2}/{3}/{4})", currentSearchValue, file.FullName, file.LastWriteTime.Year, file.LastWriteTime.Month, file.LastWriteTime.Day));
                         }
                     }
                 }
+                reader.Close();
             }
         }
 
+        private void btnClearOutput_Click(object sender, EventArgs e)
+        {
+            SetControlPropertyThreadSafe(txtOutput, "Text", string.Empty);
+        }
 
 	}
 }
