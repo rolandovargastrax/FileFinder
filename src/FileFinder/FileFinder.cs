@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Forms;
@@ -333,10 +334,13 @@ namespace FileFinder
         /// </summary>
         private void SearchInFile(FileInfo file, List<string> values)
         {
+            // control to make the file reading stop once all values from the list have been found in a file
+            Hashtable valueTracker = BuildHashtableForValueList(values);
+
             if (file.Exists)
             {
                 StreamReader reader = file.OpenText();
-                while (reader.Peek() >= 0)
+                while (reader.Peek() >= 0 && valueTracker.ContainsValue(null))
                 {
                     string line = reader.ReadLine();
                     foreach (string currentSearchValue in values)
@@ -348,11 +352,22 @@ namespace FileFinder
                         if (line.Contains(currentSearchValue))
                         {
                             AddLineToOutput(string.Format("Value '{0}' found in file '{1}' ({2}/{3}/{4})", currentSearchValue, file.FullName, file.LastWriteTime.Year, file.LastWriteTime.Month, file.LastWriteTime.Day));
+                            valueTracker[currentSearchValue] = true;
                         }
                     }
                 }
                 reader.Close();
             }
+        }
+
+        private Hashtable BuildHashtableForValueList(List<string> values)
+        {
+            Hashtable result = new Hashtable();
+            foreach (string currentValue in values)
+            {
+                result[currentValue] = null;
+            }
+            return result;
         }
 
         private void btnClearOutput_Click(object sender, EventArgs e)
