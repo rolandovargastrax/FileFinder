@@ -370,6 +370,9 @@ namespace FileFinder
             return result;
         }
 
+        /// <summary>
+        /// Method called when clicked on the clear output
+        /// </summary>
         private void btnClearOutput_Click(object sender, EventArgs e)
         {
             SetControlPropertyThreadSafe(txtOutput, "Text", string.Empty);
