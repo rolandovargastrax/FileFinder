@@ -266,9 +266,16 @@ namespace FileFinder
                     // search  in the file name
                     else if ((bool)GetControlPropertyThreadSafe(rdbFileName, "Checked"))
                     {
-                        if (searchValuesList.Contains(currentFile.Name))
+                        foreach (string fileNamePart in searchValuesList)
                         {
-                            AddLineToOutput(string.Format("File '{0}' found' ({1}/{2}/{3})", currentFile.FullName, currentFile.LastWriteTime.Year, currentFile.LastWriteTime.Month, currentFile.LastWriteTime.Day));
+                            if (!_continueWork)
+                            {
+                                break;
+                            }
+                            if (currentFile.Name.Contains(fileNamePart))
+                            {
+                                AddLineToOutput(string.Format("File '{0}' found' ({1}/{2}/{3})", currentFile.FullName, currentFile.LastWriteTime.Year, currentFile.LastWriteTime.Month, currentFile.LastWriteTime.Day));
+                            }
                         }
                     }
 
