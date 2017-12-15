@@ -131,6 +131,7 @@ namespace FileFinder
             SetControlPropertyThreadSafe(txtSourcePaths, "ReadOnly", isRunning);
             SetControlPropertyThreadSafe(chkDate, "Enabled", !isRunning);
             SetControlPropertyThreadSafe(chkIncludeSubFolders, "Enabled", !isRunning);
+            SetControlPropertyThreadSafe(chkIncludeOnlyFileNames, "Enabled", !isRunning);
             SetControlPropertyThreadSafe(dtpFileDate, "Enabled", !isRunning);
             SetControlPropertyThreadSafe(btnClearOutput, "Enabled", !isRunning);
             SetControlPropertyThreadSafe(txtOutput, "ReadOnly", isRunning);
@@ -251,6 +252,8 @@ namespace FileFinder
                 string[] searchValuesArray = searchValues.Split(new string[] { System.Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 List<string> searchValuesList = new List<string>();
                 searchValuesList.AddRange(searchValuesArray);
+                ArrayList fileNamesFound = new ArrayList();
+                bool displayfileNameOnly = (bool)GetControlPropertyThreadSafe(this.chkIncludeOnlyFileNames, "Checked");
                 _searchingInFiles = true;
                 foreach (FileInfo currentFile in files)
                 {
@@ -261,7 +264,7 @@ namespace FileFinder
                     // search in the file content
                     if ((bool)GetControlPropertyThreadSafe(rdbFileContent, "Checked"))
                     {
-                        SearchInFile(currentFile, searchValuesList);
+                        SearchInFile(currentFile, searchValuesList, fileNamesFound, displayfileNameOnly);
                     }
                     // search  in the file name
                     else if ((bool)GetControlPropertyThreadSafe(rdbFileName, "Checked"))
@@ -274,7 +277,18 @@ namespace FileFinder
                             }
                             if (currentFile.Name.Contains(fileNamePart))
                             {
-                                AddLineToOutput(string.Format("File '{0}' found' ({1}/{2}/{3})", currentFile.FullName, currentFile.LastWriteTime.Year, currentFile.LastWriteTime.Month, currentFile.LastWriteTime.Day));
+                                if (displayfileNameOnly)
+                                {
+                                    if (!fileNamesFound.Contains(currentFile.FullName))
+                                    {
+                                        AddLineToOutput(currentFile.FullName, false);
+                                        fileNamesFound.Add(currentFile.FullName);
+                                    }
+                                }
+                                else
+                                {
+                                    AddLineToOutput(string.Format("File '{0}' found' ({1}/{2}/{3})", currentFile.FullName, currentFile.LastWriteTime.Year, currentFile.LastWriteTime.Month, currentFile.LastWriteTime.Day));
+                                }
                             }
                         }
                     }
@@ -339,7 +353,7 @@ namespace FileFinder
         /// <summary>
         /// Search a list of values in a file
         /// </summary>
-        private void SearchInFile(FileInfo file, List<string> values)
+        private void SearchInFile(FileInfo file, List<string> values, ArrayList fileNamesFound, bool displayfileNameOnly)
         {
             // control to make the file reading stop once all values from the list have been found in a file
             Hashtable valueTracker = BuildHashtableForValueList(values);
@@ -358,8 +372,19 @@ namespace FileFinder
                         }
                         if (line.Contains(currentSearchValue))
                         {
-                            AddLineToOutput(string.Format("Value '{0}' found in file '{1}' ({2}/{3}/{4})", currentSearchValue, file.FullName, file.LastWriteTime.Year, file.LastWriteTime.Month, file.LastWriteTime.Day));
-                            valueTracker[currentSearchValue] = true;
+                            if (displayfileNameOnly)
+                            {
+                                if (!fileNamesFound.Contains(file.FullName))
+                                {
+                                    AddLineToOutput(file.FullName, false);
+                                    fileNamesFound.Add(file.FullName);
+                                }
+                            }
+                            else
+                            {
+                                AddLineToOutput(string.Format("Value '{0}' found in file '{1}' ({2}/{3}/{4})", currentSearchValue, file.FullName, file.LastWriteTime.Year, file.LastWriteTime.Month, file.LastWriteTime.Day));
+                                valueTracker[currentSearchValue] = true;
+                            }
                         }
                     }
                 }

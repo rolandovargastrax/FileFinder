@@ -39,6 +39,8 @@
             this.dtpFileDate = new System.Windows.Forms.DateTimePicker();
             this.chkIncludeSubFolders = new System.Windows.Forms.CheckBox();
             this.grpSearchValues = new System.Windows.Forms.GroupBox();
+            this.rdbFileName = new System.Windows.Forms.RadioButton();
+            this.rdbFileContent = new System.Windows.Forms.RadioButton();
             this.txtSearchValues = new System.Windows.Forms.TextBox();
             this.txtOutput = new System.Windows.Forms.TextBox();
             this.pnlPrgBottom = new System.Windows.Forms.Panel();
@@ -48,8 +50,7 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.prgBottom = new System.Windows.Forms.ProgressBar();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
-            this.rdbFileContent = new System.Windows.Forms.RadioButton();
-            this.rdbFileName = new System.Windows.Forms.RadioButton();
+            this.chkIncludeOnlyFileNames = new System.Windows.Forms.CheckBox();
             this.grpSourcePaths.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltMain)).BeginInit();
             this.spltMain.Panel1.SuspendLayout();
@@ -130,6 +131,7 @@
             // 
             // pnlSourcePathsBottom
             // 
+            this.pnlSourcePathsBottom.Controls.Add(this.chkIncludeOnlyFileNames);
             this.pnlSourcePathsBottom.Controls.Add(this.txtFileNamePattern);
             this.pnlSourcePathsBottom.Controls.Add(this.lblFileNamePattern);
             this.pnlSourcePathsBottom.Controls.Add(this.chkDate);
@@ -204,6 +206,29 @@
             this.grpSearchValues.TabIndex = 0;
             this.grpSearchValues.TabStop = false;
             this.grpSearchValues.Text = "Search Values";
+            // 
+            // rdbFileName
+            // 
+            this.rdbFileName.AutoSize = true;
+            this.rdbFileName.Location = new System.Drawing.Point(93, 21);
+            this.rdbFileName.Name = "rdbFileName";
+            this.rdbFileName.Size = new System.Drawing.Size(72, 17);
+            this.rdbFileName.TabIndex = 2;
+            this.rdbFileName.TabStop = true;
+            this.rdbFileName.Text = "File Name";
+            this.rdbFileName.UseVisualStyleBackColor = true;
+            // 
+            // rdbFileContent
+            // 
+            this.rdbFileContent.AutoSize = true;
+            this.rdbFileContent.Checked = true;
+            this.rdbFileContent.Location = new System.Drawing.Point(6, 19);
+            this.rdbFileContent.Name = "rdbFileContent";
+            this.rdbFileContent.Size = new System.Drawing.Size(81, 17);
+            this.rdbFileContent.TabIndex = 1;
+            this.rdbFileContent.TabStop = true;
+            this.rdbFileContent.Text = "File Content";
+            this.rdbFileContent.UseVisualStyleBackColor = true;
             // 
             // txtSearchValues
             // 
@@ -304,28 +329,15 @@
             this.bgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker_DoWork);
             this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
             // 
-            // rdbFileContent
+            // chkIncludeOnlyFileNames
             // 
-            this.rdbFileContent.AutoSize = true;
-            this.rdbFileContent.Checked = true;
-            this.rdbFileContent.Location = new System.Drawing.Point(6, 19);
-            this.rdbFileContent.Name = "rdbFileContent";
-            this.rdbFileContent.Size = new System.Drawing.Size(81, 17);
-            this.rdbFileContent.TabIndex = 1;
-            this.rdbFileContent.TabStop = true;
-            this.rdbFileContent.Text = "File Content";
-            this.rdbFileContent.UseVisualStyleBackColor = true;
-            // 
-            // rdbFileName
-            // 
-            this.rdbFileName.AutoSize = true;
-            this.rdbFileName.Location = new System.Drawing.Point(93, 21);
-            this.rdbFileName.Name = "rdbFileName";
-            this.rdbFileName.Size = new System.Drawing.Size(72, 17);
-            this.rdbFileName.TabIndex = 2;
-            this.rdbFileName.TabStop = true;
-            this.rdbFileName.Text = "File Name";
-            this.rdbFileName.UseVisualStyleBackColor = true;
+            this.chkIncludeOnlyFileNames.AutoSize = true;
+            this.chkIncludeOnlyFileNames.Location = new System.Drawing.Point(308, 29);
+            this.chkIncludeOnlyFileNames.Name = "chkIncludeOnlyFileNames";
+            this.chkIncludeOnlyFileNames.Size = new System.Drawing.Size(140, 17);
+            this.chkIncludeOnlyFileNames.TabIndex = 6;
+            this.chkIncludeOnlyFileNames.Text = "Include Only File Names";
+            this.chkIncludeOnlyFileNames.UseVisualStyleBackColor = true;
             // 
             // FileFinder
             // 
@@ -383,6 +395,7 @@
         private System.Windows.Forms.Button btnClearOutput;
         private System.Windows.Forms.RadioButton rdbFileName;
         private System.Windows.Forms.RadioButton rdbFileContent;
+        private System.Windows.Forms.CheckBox chkIncludeOnlyFileNames;
     }
 }
 
