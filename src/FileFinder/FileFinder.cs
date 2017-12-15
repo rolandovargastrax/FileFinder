@@ -378,6 +378,7 @@ namespace FileFinder
                                 {
                                     AddLineToOutput(file.FullName, false);
                                     fileNamesFound.Add(file.FullName);
+                                    return;
                                 }
                             }
                             else
