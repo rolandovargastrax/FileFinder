@@ -33,6 +33,7 @@
             this.spltMain = new System.Windows.Forms.SplitContainer();
             this.spltTop = new System.Windows.Forms.SplitContainer();
             this.pnlSourcePathsBottom = new System.Windows.Forms.Panel();
+            this.chkIncludeOnlyFileNames = new System.Windows.Forms.CheckBox();
             this.txtFileNamePattern = new System.Windows.Forms.TextBox();
             this.lblFileNamePattern = new System.Windows.Forms.Label();
             this.chkDate = new System.Windows.Forms.CheckBox();
@@ -50,7 +51,7 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.prgBottom = new System.Windows.Forms.ProgressBar();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
-            this.chkIncludeOnlyFileNames = new System.Windows.Forms.CheckBox();
+            this.chkUniqueValuePerFile = new System.Windows.Forms.CheckBox();
             this.grpSourcePaths.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltMain)).BeginInit();
             this.spltMain.Panel1.SuspendLayout();
@@ -131,6 +132,7 @@
             // 
             // pnlSourcePathsBottom
             // 
+            this.pnlSourcePathsBottom.Controls.Add(this.chkUniqueValuePerFile);
             this.pnlSourcePathsBottom.Controls.Add(this.chkIncludeOnlyFileNames);
             this.pnlSourcePathsBottom.Controls.Add(this.txtFileNamePattern);
             this.pnlSourcePathsBottom.Controls.Add(this.lblFileNamePattern);
@@ -142,6 +144,16 @@
             this.pnlSourcePathsBottom.Name = "pnlSourcePathsBottom";
             this.pnlSourcePathsBottom.Size = new System.Drawing.Size(550, 52);
             this.pnlSourcePathsBottom.TabIndex = 0;
+            // 
+            // chkIncludeOnlyFileNames
+            // 
+            this.chkIncludeOnlyFileNames.AutoSize = true;
+            this.chkIncludeOnlyFileNames.Location = new System.Drawing.Point(308, 29);
+            this.chkIncludeOnlyFileNames.Name = "chkIncludeOnlyFileNames";
+            this.chkIncludeOnlyFileNames.Size = new System.Drawing.Size(102, 17);
+            this.chkIncludeOnlyFileNames.TabIndex = 6;
+            this.chkIncludeOnlyFileNames.Text = "File Names Only";
+            this.chkIncludeOnlyFileNames.UseVisualStyleBackColor = true;
             // 
             // txtFileNamePattern
             // 
@@ -329,15 +341,15 @@
             this.bgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker_DoWork);
             this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
             // 
-            // chkIncludeOnlyFileNames
+            // chkUniqueValuePerFile
             // 
-            this.chkIncludeOnlyFileNames.AutoSize = true;
-            this.chkIncludeOnlyFileNames.Location = new System.Drawing.Point(308, 29);
-            this.chkIncludeOnlyFileNames.Name = "chkIncludeOnlyFileNames";
-            this.chkIncludeOnlyFileNames.Size = new System.Drawing.Size(140, 17);
-            this.chkIncludeOnlyFileNames.TabIndex = 6;
-            this.chkIncludeOnlyFileNames.Text = "Include Only File Names";
-            this.chkIncludeOnlyFileNames.UseVisualStyleBackColor = true;
+            this.chkUniqueValuePerFile.AutoSize = true;
+            this.chkUniqueValuePerFile.Location = new System.Drawing.Point(414, 29);
+            this.chkUniqueValuePerFile.Name = "chkUniqueValuePerFile";
+            this.chkUniqueValuePerFile.Size = new System.Drawing.Size(133, 17);
+            this.chkUniqueValuePerFile.TabIndex = 7;
+            this.chkUniqueValuePerFile.Text = "Unique Values Per File";
+            this.chkUniqueValuePerFile.UseVisualStyleBackColor = true;
             // 
             // FileFinder
             // 
@@ -396,6 +408,7 @@
         private System.Windows.Forms.RadioButton rdbFileName;
         private System.Windows.Forms.RadioButton rdbFileContent;
         private System.Windows.Forms.CheckBox chkIncludeOnlyFileNames;
+        private System.Windows.Forms.CheckBox chkUniqueValuePerFile;
     }
 }
 

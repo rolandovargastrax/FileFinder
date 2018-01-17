@@ -254,6 +254,8 @@ namespace FileFinder
                 searchValuesList.AddRange(searchValuesArray);
                 ArrayList fileNamesFound = new ArrayList();
                 bool displayfileNameOnly = (bool)GetControlPropertyThreadSafe(this.chkIncludeOnlyFileNames, "Checked");
+                bool uniqueValuePerFile = (bool)GetControlPropertyThreadSafe(this.chkUniqueValuePerFile, "Checked");
+
                 _searchingInFiles = true;
                 foreach (FileInfo currentFile in files)
                 {
@@ -264,7 +266,7 @@ namespace FileFinder
                     // search in the file content
                     if ((bool)GetControlPropertyThreadSafe(rdbFileContent, "Checked"))
                     {
-                        SearchInFile(currentFile, searchValuesList, fileNamesFound, displayfileNameOnly);
+                        SearchInFile(currentFile, searchValuesList, fileNamesFound, displayfileNameOnly, uniqueValuePerFile);
                     }
                     // search  in the file name
                     else if ((bool)GetControlPropertyThreadSafe(rdbFileName, "Checked"))
@@ -353,7 +355,7 @@ namespace FileFinder
         /// <summary>
         /// Search a list of values in a file
         /// </summary>
-        private void SearchInFile(FileInfo file, List<string> values, ArrayList fileNamesFound, bool displayfileNameOnly)
+        private void SearchInFile(FileInfo file, List<string> values, ArrayList fileNamesFound, bool displayfileNameOnly, bool uniqueValuePerFile)
         {
             // control to make the file reading stop once all values from the list have been found in a file
             Hashtable valueTracker = BuildHashtableForValueList(values);
@@ -383,8 +385,20 @@ namespace FileFinder
                             }
                             else
                             {
-                                AddLineToOutput(string.Format("Value '{0}' found in file '{1}' ({2}/{3}/{4})", currentSearchValue, file.FullName, file.LastWriteTime.Year, file.LastWriteTime.Month, file.LastWriteTime.Day));
-                                valueTracker[currentSearchValue] = true;
+                                if (uniqueValuePerFile)
+                                {
+                                    if (valueTracker[currentSearchValue] == null || ((bool)valueTracker.ContainsKey(currentSearchValue) == false))
+                                    {
+                                        AddLineToOutput(string.Format("Value '{0}' found in file '{1}'", currentSearchValue, file.FullName), false);
+                                    }
+                                    valueTracker[currentSearchValue] = true;
+                                    break;
+                                }
+                                else
+                                {
+                                    AddLineToOutput(string.Format("Value '{0}' found in file '{1}' ({2}/{3}/{4})", currentSearchValue, file.FullName, file.LastWriteTime.Year, file.LastWriteTime.Month, file.LastWriteTime.Day));
+                                    valueTracker[currentSearchValue] = true;
+                                }
                             }
                         }
                     }
