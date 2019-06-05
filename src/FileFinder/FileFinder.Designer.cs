@@ -33,11 +33,12 @@
             this.spltMain = new System.Windows.Forms.SplitContainer();
             this.spltTop = new System.Windows.Forms.SplitContainer();
             this.pnlSourcePathsBottom = new System.Windows.Forms.Panel();
+            this.chkUniqueValuePerFile = new System.Windows.Forms.CheckBox();
             this.chkIncludeOnlyFileNames = new System.Windows.Forms.CheckBox();
             this.txtFileNamePattern = new System.Windows.Forms.TextBox();
             this.lblFileNamePattern = new System.Windows.Forms.Label();
-            this.chkDate = new System.Windows.Forms.CheckBox();
-            this.dtpFileDate = new System.Windows.Forms.DateTimePicker();
+            this.chkDateMin = new System.Windows.Forms.CheckBox();
+            this.dtpFileDateMin = new System.Windows.Forms.DateTimePicker();
             this.chkIncludeSubFolders = new System.Windows.Forms.CheckBox();
             this.grpSearchValues = new System.Windows.Forms.GroupBox();
             this.rdbFileName = new System.Windows.Forms.RadioButton();
@@ -51,7 +52,8 @@
             this.btnSearch = new System.Windows.Forms.Button();
             this.prgBottom = new System.Windows.Forms.ProgressBar();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
-            this.chkUniqueValuePerFile = new System.Windows.Forms.CheckBox();
+            this.chkDateMax = new System.Windows.Forms.CheckBox();
+            this.dtpFileDateMax = new System.Windows.Forms.DateTimePicker();
             this.grpSourcePaths.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.spltMain)).BeginInit();
             this.spltMain.Panel1.SuspendLayout();
@@ -73,7 +75,7 @@
             this.grpSourcePaths.Location = new System.Drawing.Point(0, 0);
             this.grpSourcePaths.Name = "grpSourcePaths";
             this.grpSourcePaths.Padding = new System.Windows.Forms.Padding(8);
-            this.grpSourcePaths.Size = new System.Drawing.Size(550, 198);
+            this.grpSourcePaths.Size = new System.Drawing.Size(550, 176);
             this.grpSourcePaths.TabIndex = 0;
             this.grpSourcePaths.TabStop = false;
             this.grpSourcePaths.Text = "Source Paths";
@@ -87,7 +89,7 @@
             this.txtSourcePaths.Multiline = true;
             this.txtSourcePaths.Name = "txtSourcePaths";
             this.txtSourcePaths.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtSourcePaths.Size = new System.Drawing.Size(534, 169);
+            this.txtSourcePaths.Size = new System.Drawing.Size(534, 147);
             this.txtSourcePaths.TabIndex = 0;
             // 
             // spltMain
@@ -132,23 +134,35 @@
             // 
             // pnlSourcePathsBottom
             // 
+            this.pnlSourcePathsBottom.Controls.Add(this.dtpFileDateMax);
+            this.pnlSourcePathsBottom.Controls.Add(this.chkDateMax);
             this.pnlSourcePathsBottom.Controls.Add(this.chkUniqueValuePerFile);
             this.pnlSourcePathsBottom.Controls.Add(this.chkIncludeOnlyFileNames);
             this.pnlSourcePathsBottom.Controls.Add(this.txtFileNamePattern);
             this.pnlSourcePathsBottom.Controls.Add(this.lblFileNamePattern);
-            this.pnlSourcePathsBottom.Controls.Add(this.chkDate);
-            this.pnlSourcePathsBottom.Controls.Add(this.dtpFileDate);
+            this.pnlSourcePathsBottom.Controls.Add(this.chkDateMin);
+            this.pnlSourcePathsBottom.Controls.Add(this.dtpFileDateMin);
             this.pnlSourcePathsBottom.Controls.Add(this.chkIncludeSubFolders);
             this.pnlSourcePathsBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlSourcePathsBottom.Location = new System.Drawing.Point(0, 198);
+            this.pnlSourcePathsBottom.Location = new System.Drawing.Point(0, 176);
             this.pnlSourcePathsBottom.Name = "pnlSourcePathsBottom";
-            this.pnlSourcePathsBottom.Size = new System.Drawing.Size(550, 52);
+            this.pnlSourcePathsBottom.Size = new System.Drawing.Size(550, 74);
             this.pnlSourcePathsBottom.TabIndex = 0;
+            // 
+            // chkUniqueValuePerFile
+            // 
+            this.chkUniqueValuePerFile.AutoSize = true;
+            this.chkUniqueValuePerFile.Location = new System.Drawing.Point(243, 29);
+            this.chkUniqueValuePerFile.Name = "chkUniqueValuePerFile";
+            this.chkUniqueValuePerFile.Size = new System.Drawing.Size(133, 17);
+            this.chkUniqueValuePerFile.TabIndex = 7;
+            this.chkUniqueValuePerFile.Text = "Unique Values Per File";
+            this.chkUniqueValuePerFile.UseVisualStyleBackColor = true;
             // 
             // chkIncludeOnlyFileNames
             // 
             this.chkIncludeOnlyFileNames.AutoSize = true;
-            this.chkIncludeOnlyFileNames.Location = new System.Drawing.Point(308, 29);
+            this.chkIncludeOnlyFileNames.Location = new System.Drawing.Point(123, 29);
             this.chkIncludeOnlyFileNames.Name = "chkIncludeOnlyFileNames";
             this.chkIncludeOnlyFileNames.Size = new System.Drawing.Size(102, 17);
             this.chkIncludeOnlyFileNames.TabIndex = 6;
@@ -174,25 +188,25 @@
             this.lblFileNamePattern.TabIndex = 4;
             this.lblFileNamePattern.Text = "File Name Pattern";
             // 
-            // chkDate
+            // chkDateMin
             // 
-            this.chkDate.AutoSize = true;
-            this.chkDate.Checked = true;
-            this.chkDate.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkDate.Location = new System.Drawing.Point(123, 29);
-            this.chkDate.Name = "chkDate";
-            this.chkDate.Size = new System.Drawing.Size(72, 17);
-            this.chkDate.TabIndex = 3;
-            this.chkDate.Text = "Files After";
-            this.chkDate.UseVisualStyleBackColor = true;
+            this.chkDateMin.AutoSize = true;
+            this.chkDateMin.Checked = true;
+            this.chkDateMin.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkDateMin.Location = new System.Drawing.Point(3, 52);
+            this.chkDateMin.Name = "chkDateMin";
+            this.chkDateMin.Size = new System.Drawing.Size(72, 17);
+            this.chkDateMin.TabIndex = 3;
+            this.chkDateMin.Text = "Files After";
+            this.chkDateMin.UseVisualStyleBackColor = true;
             // 
-            // dtpFileDate
+            // dtpFileDateMin
             // 
-            this.dtpFileDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpFileDate.Location = new System.Drawing.Point(201, 26);
-            this.dtpFileDate.Name = "dtpFileDate";
-            this.dtpFileDate.Size = new System.Drawing.Size(101, 20);
-            this.dtpFileDate.TabIndex = 2;
+            this.dtpFileDateMin.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFileDateMin.Location = new System.Drawing.Point(81, 47);
+            this.dtpFileDateMin.Name = "dtpFileDateMin";
+            this.dtpFileDateMin.Size = new System.Drawing.Size(101, 20);
+            this.dtpFileDateMin.TabIndex = 2;
             // 
             // chkIncludeSubFolders
             // 
@@ -341,15 +355,25 @@
             this.bgWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bgWorker_DoWork);
             this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
             // 
-            // chkUniqueValuePerFile
+            // chkDateMax
             // 
-            this.chkUniqueValuePerFile.AutoSize = true;
-            this.chkUniqueValuePerFile.Location = new System.Drawing.Point(414, 29);
-            this.chkUniqueValuePerFile.Name = "chkUniqueValuePerFile";
-            this.chkUniqueValuePerFile.Size = new System.Drawing.Size(133, 17);
-            this.chkUniqueValuePerFile.TabIndex = 7;
-            this.chkUniqueValuePerFile.Text = "Unique Values Per File";
-            this.chkUniqueValuePerFile.UseVisualStyleBackColor = true;
+            this.chkDateMax.AutoSize = true;
+            this.chkDateMax.Checked = true;
+            this.chkDateMax.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkDateMax.Location = new System.Drawing.Point(188, 50);
+            this.chkDateMax.Name = "chkDateMax";
+            this.chkDateMax.Size = new System.Drawing.Size(81, 17);
+            this.chkDateMax.TabIndex = 8;
+            this.chkDateMax.Text = "Files Before";
+            this.chkDateMax.UseVisualStyleBackColor = true;
+            // 
+            // dtpFileDateMax
+            // 
+            this.dtpFileDateMax.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpFileDateMax.Location = new System.Drawing.Point(275, 47);
+            this.dtpFileDateMax.Name = "dtpFileDateMax";
+            this.dtpFileDateMax.Size = new System.Drawing.Size(101, 20);
+            this.dtpFileDateMax.TabIndex = 9;
             // 
             // FileFinder
             // 
@@ -398,8 +422,8 @@
         private System.Windows.Forms.TextBox txtOutput;
         private System.Windows.Forms.GroupBox grpSearchValues;
         private System.Windows.Forms.TextBox txtSearchValues;
-        private System.Windows.Forms.DateTimePicker dtpFileDate;
-        private System.Windows.Forms.CheckBox chkDate;
+        private System.Windows.Forms.DateTimePicker dtpFileDateMin;
+        private System.Windows.Forms.CheckBox chkDateMin;
         private System.ComponentModel.BackgroundWorker bgWorker;
         private System.Windows.Forms.TextBox txtFileNamePattern;
         private System.Windows.Forms.Label lblFileNamePattern;
@@ -409,6 +433,8 @@
         private System.Windows.Forms.RadioButton rdbFileContent;
         private System.Windows.Forms.CheckBox chkIncludeOnlyFileNames;
         private System.Windows.Forms.CheckBox chkUniqueValuePerFile;
+        private System.Windows.Forms.CheckBox chkDateMax;
+        private System.Windows.Forms.DateTimePicker dtpFileDateMax;
     }
 }
 

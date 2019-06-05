@@ -9,102 +9,102 @@ using System.IO;
 
 namespace FileFinder
 {
-	public partial class FileFinder : Form
-	{
-		public FileFinder()
-		{
-			InitializeComponent();
-		}
+    public partial class FileFinder : Form
+    {
+        public FileFinder()
+        {
+            InitializeComponent();
+        }
 
         private bool _continueWork = true;
         private bool _searchingInFiles = false;
 
-		#region Update UI Controls
-		private delegate void SetControlPropertyThreadSafeDelegate(Control control, string propertyName, object propertyValue);
-		public static void SetControlPropertyThreadSafe(Control control, string propertyName, object propertyValue)
-		{
-			if (control.InvokeRequired)
-			{
-				control.Invoke(new SetControlPropertyThreadSafeDelegate(SetControlPropertyThreadSafe), new object[] { control, propertyName, propertyValue });
-			}
-			else
-			{
-				control.GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, control, new object[] { propertyValue });
-			}
-		}
+        #region Update UI Controls
+        private delegate void SetControlPropertyThreadSafeDelegate(Control control, string propertyName, object propertyValue);
+        public static void SetControlPropertyThreadSafe(Control control, string propertyName, object propertyValue)
+        {
+            if (control.InvokeRequired)
+            {
+                control.Invoke(new SetControlPropertyThreadSafeDelegate(SetControlPropertyThreadSafe), new object[] { control, propertyName, propertyValue });
+            }
+            else
+            {
+                control.GetType().InvokeMember(propertyName, BindingFlags.SetProperty, null, control, new object[] { propertyValue });
+            }
+        }
 
-		private delegate object GetControlPropertyThreadSafeDelegate(Control control, string propertyName);
-		public static object GetControlPropertyThreadSafe(Control control, string propertyName)
-		{
-			if (control.InvokeRequired)
-			{
-				return control.Invoke(new GetControlPropertyThreadSafeDelegate(GetControlPropertyThreadSafe), new object[] { control, propertyName });
-			}
-			else
-			{
-				return control.GetType().InvokeMember(propertyName, BindingFlags.GetProperty, null, control, new object[] { });
-			}
-		}
+        private delegate object GetControlPropertyThreadSafeDelegate(Control control, string propertyName);
+        public static object GetControlPropertyThreadSafe(Control control, string propertyName)
+        {
+            if (control.InvokeRequired)
+            {
+                return control.Invoke(new GetControlPropertyThreadSafeDelegate(GetControlPropertyThreadSafe), new object[] { control, propertyName });
+            }
+            else
+            {
+                return control.GetType().InvokeMember(propertyName, BindingFlags.GetProperty, null, control, new object[] { });
+            }
+        }
 
 
 
-		private delegate void CallMethodThreadSafeDelegate(Control control, string method, object[] parameters);
-		public static void CallMethodThreadSafe(Control control, string method, object[] parameters)
-		{
-			if (control.InvokeRequired)
-			{
-				control.Invoke(new CallMethodThreadSafeDelegate(CallMethodThreadSafe), new object[] { control, method, parameters });
-			}
-			else
-			{
-				control.GetType().InvokeMember(method, BindingFlags.InvokeMethod, null, control, parameters);
-			}
-		}
+        private delegate void CallMethodThreadSafeDelegate(Control control, string method, object[] parameters);
+        public static void CallMethodThreadSafe(Control control, string method, object[] parameters)
+        {
+            if (control.InvokeRequired)
+            {
+                control.Invoke(new CallMethodThreadSafeDelegate(CallMethodThreadSafe), new object[] { control, method, parameters });
+            }
+            else
+            {
+                control.GetType().InvokeMember(method, BindingFlags.InvokeMethod, null, control, parameters);
+            }
+        }
 
-		#endregion Update UI Controls
+        #endregion Update UI Controls
 
-		#region Update Log
+        #region Update Log
 
-		private delegate void OutputScrollToCaretDelegate(Control control);
-		public static void OutputScrollToCaret(Control control)
-		{
-			if (control.InvokeRequired)
-			{
-				control.Invoke(new OutputScrollToCaretDelegate(OutputScrollToCaret), new object[] { control });
-			}
-			else
-			{
-				control.GetType().InvokeMember("ScrollToCaret", BindingFlags.InvokeMethod, null, control, new object[] { });
-				control.GetType().InvokeMember("Refresh", BindingFlags.InvokeMethod, null, control, new object[] { });
-			}
-		}
-		private void AddLineToOutput(string message)
-		{
-			this.AddLineToOutput(message, true);
-		}
-		private void AddLineToOutput(string message, bool includeTimeStamp)
-		{
-			AddToOutput(message, Environment.NewLine, includeTimeStamp);
-		}
-		private void AddToOutput(string message)
-		{
-			AddToOutput(message, string.Empty, false);
-		}
-		private void AddToOutput(string message, string spacer, bool includeTimeStamp)
-		{
-			string timestampPrefix = string.Empty;
-			if (includeTimeStamp)
-			{
-				timestampPrefix = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss - ");
-			}
-			SetControlPropertyThreadSafe(txtOutput, "Text", string.Format("{0}{1}{2}{3}", txtOutput.Text, timestampPrefix, message, spacer));
+        private delegate void OutputScrollToCaretDelegate(Control control);
+        public static void OutputScrollToCaret(Control control)
+        {
+            if (control.InvokeRequired)
+            {
+                control.Invoke(new OutputScrollToCaretDelegate(OutputScrollToCaret), new object[] { control });
+            }
+            else
+            {
+                control.GetType().InvokeMember("ScrollToCaret", BindingFlags.InvokeMethod, null, control, new object[] { });
+                control.GetType().InvokeMember("Refresh", BindingFlags.InvokeMethod, null, control, new object[] { });
+            }
+        }
+        private void AddLineToOutput(string message)
+        {
+            this.AddLineToOutput(message, true);
+        }
+        private void AddLineToOutput(string message, bool includeTimeStamp)
+        {
+            AddToOutput(message, Environment.NewLine, includeTimeStamp);
+        }
+        private void AddToOutput(string message)
+        {
+            AddToOutput(message, string.Empty, false);
+        }
+        private void AddToOutput(string message, string spacer, bool includeTimeStamp)
+        {
+            string timestampPrefix = string.Empty;
+            if (includeTimeStamp)
+            {
+                timestampPrefix = DateTime.Now.ToString("yyyy.MM.dd HH:mm:ss - ");
+            }
+            SetControlPropertyThreadSafe(txtOutput, "Text", string.Format("{0}{1}{2}{3}", txtOutput.Text, timestampPrefix, message, spacer));
 
-			int textLength = (int)GetControlPropertyThreadSafe(txtOutput, "TextLength");
-			SetControlPropertyThreadSafe(txtOutput, "SelectionStart", textLength - 1);
-			OutputScrollToCaret(txtOutput);
-		}
+            int textLength = (int)GetControlPropertyThreadSafe(txtOutput, "TextLength");
+            SetControlPropertyThreadSafe(txtOutput, "SelectionStart", textLength - 1);
+            OutputScrollToCaret(txtOutput);
+        }
 
-		#endregion Update Log
+        #endregion Update Log
 
         /// <summary>
         /// Method called when the form is initialized
@@ -112,7 +112,7 @@ namespace FileFinder
         private void FileFinder_Load(object sender, EventArgs e)
         {
             UpdateControlStatus(false);
-            dtpFileDate.Value = DateTime.Now;
+            dtpFileDateMin.Value = DateTime.Now;
             lblProgress.Text = "";
         }
 
@@ -129,41 +129,49 @@ namespace FileFinder
             SetControlPropertyThreadSafe(txtOutput, "ReadOnly", isRunning);
             SetControlPropertyThreadSafe(txtSearchValues, "ReadOnly", isRunning);
             SetControlPropertyThreadSafe(txtSourcePaths, "ReadOnly", isRunning);
-            SetControlPropertyThreadSafe(chkDate, "Enabled", !isRunning);
+            SetControlPropertyThreadSafe(chkDateMin, "Enabled", !isRunning);
             SetControlPropertyThreadSafe(chkIncludeSubFolders, "Enabled", !isRunning);
             SetControlPropertyThreadSafe(chkIncludeOnlyFileNames, "Enabled", !isRunning);
-            SetControlPropertyThreadSafe(dtpFileDate, "Enabled", !isRunning);
+            SetControlPropertyThreadSafe(dtpFileDateMin, "Enabled", !isRunning);
             SetControlPropertyThreadSafe(btnClearOutput, "Enabled", !isRunning);
             SetControlPropertyThreadSafe(txtOutput, "ReadOnly", isRunning);
             SetControlPropertyThreadSafe(rdbFileName, "Enabled", !isRunning);
             SetControlPropertyThreadSafe(rdbFileContent, "Enabled", !isRunning);
+            SetControlPropertyThreadSafe(chkUniqueValuePerFile, "Enabled", !isRunning);
+            SetControlPropertyThreadSafe(chkDateMax, "Enabled", !isRunning);
+            SetControlPropertyThreadSafe(dtpFileDateMax, "Enabled", !isRunning);
         }
         #endregion UpdateControlStatus
 
         /// <summary>
         /// Method called to trigger the backgrouund worker
         /// </summary>
-		private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
-		{
+        private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
             AddLineToOutput("Start");
             _continueWork = true;
             UpdateControlStatus(true);
-            DateTime dateValue = DateTime.MinValue;
-            if ((bool)GetControlPropertyThreadSafe(chkDate, "Checked"))
+            DateTime dateValueMin = DateTime.MinValue;
+            if ((bool)GetControlPropertyThreadSafe(chkDateMin, "Checked"))
             {
-                dateValue = dtpFileDate.Value.Date;
+                dateValueMin = dtpFileDateMin.Value.Date;
             }
-            SearchFiles((string)GetControlPropertyThreadSafe(txtSourcePaths, "Text"), (string)GetControlPropertyThreadSafe(txtSearchValues, "Text"), (string)GetControlPropertyThreadSafe(txtFileNamePattern, "Text"), (bool)GetControlPropertyThreadSafe(chkIncludeSubFolders, "Checked"), dateValue);
-		}
+            DateTime dateValueMax = DateTime.MaxValue;
+            if ((bool)GetControlPropertyThreadSafe(chkDateMax, "Checked"))
+            {
+                dateValueMax = dtpFileDateMax.Value.Date;
+            }
+            SearchFiles((string)GetControlPropertyThreadSafe(txtSourcePaths, "Text"), (string)GetControlPropertyThreadSafe(txtSearchValues, "Text"), (string)GetControlPropertyThreadSafe(txtFileNamePattern, "Text"), (bool)GetControlPropertyThreadSafe(chkIncludeSubFolders, "Checked"), dateValueMin, dateValueMax);
+        }
 
         /// <summary>
         /// Method called when background worker has finished its work
         /// </summary>
-		private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-		{
+        private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
             AddLineToOutput("End");
             UpdateControlStatus(false);
-		}
+        }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
@@ -178,7 +186,7 @@ namespace FileFinder
         /// <summary>
         /// Search for files
         /// </summary>
-        private void SearchFiles(string sourcePaths, string searchValues, string fileNamePattern, bool includeSubFolders, DateTime dateAfter)
+        private void SearchFiles(string sourcePaths, string searchValues, string fileNamePattern, bool includeSubFolders, DateTime dateMin, DateTime dateMax)
         {
             try
             {
@@ -209,7 +217,7 @@ namespace FileFinder
                         {
                             break;
                         }
-                        GetSubFolders(ref paths, currentPath, dateAfter);
+                        GetSubFolders(ref paths, currentPath, dateMin, dateMax);
                         AddToProgressBar();
                     }
                 }
@@ -234,7 +242,7 @@ namespace FileFinder
                         {
                             break;
                         }
-                        if ((dateAfter == DateTime.MinValue) || (currentFile.LastWriteTime >= dateAfter))
+                        if (((dateMin == DateTime.MinValue) || (currentFile.LastWriteTime >= dateMin)) && ((dateMax == DateTime.MaxValue) || (currentFile.LastWriteTime.Date <= dateMax)))
                         {
                             files.Add(currentFile);
                         }
@@ -323,7 +331,7 @@ namespace FileFinder
             }
         }
 
-        private void GetSubFolders(ref List<DirectoryInfo> paths, DirectoryInfo path, DateTime lastWriteTime)
+        private void GetSubFolders(ref List<DirectoryInfo> paths, DirectoryInfo path, DateTime lastWriteTimeMin, DateTime lastWriteTimeMax)
         {
             if (path.Exists)
             {
@@ -339,10 +347,10 @@ namespace FileFinder
                         break;
                     }
 
-                    if ((lastWriteTime == DateTime.MinValue) || (currentSubDirectory.LastWriteTime >= lastWriteTime))
+                    if (((lastWriteTimeMin == DateTime.MinValue) || (currentSubDirectory.LastWriteTime >= lastWriteTimeMin)) && ((lastWriteTimeMax == DateTime.MaxValue) || (currentSubDirectory.LastWriteTime.Date <= lastWriteTimeMax)))
                     {
                         paths.Add(currentSubDirectory);
-                        GetSubFolders(ref paths, currentSubDirectory, lastWriteTime);
+                        GetSubFolders(ref paths, currentSubDirectory, lastWriteTimeMin, lastWriteTimeMax);
                     }
                     else
                     {
@@ -425,5 +433,5 @@ namespace FileFinder
             SetControlPropertyThreadSafe(txtOutput, "Text", string.Empty);
         }
 
-	}
+    }
 }
